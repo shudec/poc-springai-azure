@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    root: INFO
+    com.ssg.ccoe.demo.azure.springai: INFO
+    org.springframework.ai: INFO
+
+# Production uses Managed Identity (no API key)
+# Azure OpenAI endpoint and deployment are configured via environment variables

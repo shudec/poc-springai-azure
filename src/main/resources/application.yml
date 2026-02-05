@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: springai-azure-demo
+  ai:
+    azure:
+      openai:
+        endpoint: ${AZURE_OPENAI_ENDPOINT}
+        chat:
+          options:
+            deployment-name: ${AZURE_OPENAI_DEPLOYMENT_NAME:gpt-4o-mini}
+            temperature: 0.7
+            max-tokens: 800
+
+logging:
+  level:
+    root: INFO
+    com.ssg.ccoe.demo.azure.springai: DEBUG
+    org.springframework.ai: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+rate:
+  limit:
+    requests-per-minute: ${RATE_LIMIT_RPM:10}
+
+# Application Insights
+azure:
+  application-insights:
+    connection-string: ${APPLICATIONINSIGHTS_CONNECTION_STRING:}
+    instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY:}

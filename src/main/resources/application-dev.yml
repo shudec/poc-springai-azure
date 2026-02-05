@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  ai:
+    azure:
+      openai:
+        api-key: ${AZURE_OPENAI_API_KEY}
+
+logging:
+  level:
+    root: DEBUG
+    com.ssg.ccoe.demo.azure.springai: DEBUG
+    org.springframework.ai: DEBUG

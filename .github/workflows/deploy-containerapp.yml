@@ -1,0 +1,58 @@
+name: Deploy to Azure Container Apps
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: '21'
+  ACR_LOGIN_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}
+  
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'maven'
+        
+    - name: Run tests
+      run: mvn test
+      
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - name: Login to Azure Container Registry
+      run: |
+        echo ${{ secrets.ACR_PASSWORD }} | docker login ${{ secrets.ACR_LOGIN_SERVER }} \
+          --username ${{ secrets.ACR_USERNAME }} \
+          --password-stdin
+        
+    - name: Build and push Docker image with Jib
+      run: |
+        mvn compile jib:build \
+          -Dimage=${{ secrets.ACR_LOGIN_SERVER }}/springai-azure-demo:${{ github.sha }} \
+          -Djib.to.auth.username=${{ secrets.ACR_USERNAME }} \
+          -Djib.to.auth.password=${{ secrets.ACR_PASSWORD }}
+        
+    - name: Deploy to Azure Container Apps
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        containerAppName: ${{ secrets.CONTAINER_APP_NAME }}
+        resourceGroup: ${{ secrets.RESOURCE_GROUP_NAME }}
+        imageToDeploy: ${{ secrets.ACR_LOGIN_SERVER }}/springai-azure-demo:${{ github.sha }}
+        
+    - name: Azure Logout
+      if: always()
+      run: az logout

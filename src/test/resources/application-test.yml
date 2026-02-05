@@ -1,0 +1,17 @@
+# Test profile configuration
+spring:
+  config:
+    activate:
+      on-profile: test
+  ai:
+    azure:
+      openai:
+        endpoint: http://localhost:8080/mock
+        api-key: test-key
+        chat:
+          options:
+            deployment-name: gpt-4o-mini
+
+logging:
+  level:
+    root: INFO
