@@ -38,7 +38,7 @@ class RateLimitIntegrationTest {
         
         // Simulate rate limit exceeded (0 remaining tokens, need to wait 30 seconds)
         when(rateLimitBucket.tryConsumeAndReturnRemaining(1))
-            .thenReturn(io.github.bucket4j.ConsumptionProbe.rejected(0, 30_000_000_000L));
+            .thenReturn(io.github.bucket4j.ConsumptionProbe.rejected(0L, 0L, 30_000_000_000L));
         
         // Act & Assert
         mockMvc.perform(post("/api/chat")
@@ -55,7 +55,7 @@ class RateLimitIntegrationTest {
         
         // Simulate successful consumption (9 remaining tokens)
         when(rateLimitBucket.tryConsumeAndReturnRemaining(1))
-            .thenReturn(io.github.bucket4j.ConsumptionProbe.consumed(9));
+            .thenReturn(io.github.bucket4j.ConsumptionProbe.consumed(9L, 9L));
         
         // Act & Assert - should not return rate limit error
         mockMvc.perform(post("/api/chat")

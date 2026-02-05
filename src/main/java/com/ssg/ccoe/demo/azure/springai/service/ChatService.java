@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.azure.openai.AzureOpenAiChatModel;
 import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class ChatService {
         
         try {
             Prompt prompt = new Prompt(new UserMessage(request.message()));
-            ChatResponse response = chatModel.call(prompt);
+            org.springframework.ai.chat.model.ChatResponse response = chatModel.call(prompt);
             
             String responseText = response.getResult().getOutput().getContent();
             logger.info("Successfully generated response");

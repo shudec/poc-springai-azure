@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ai.azure.openai.AzureOpenAiChatModel;
 import org.springframework.ai.chat.messages.AssistantMessage;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -41,7 +40,8 @@ class ChatServiceTest {
         String expectedResponse = "Hello! How can I help you today?";
         
         Generation generation = new Generation(new AssistantMessage(expectedResponse));
-        ChatResponse mockChatResponse = new ChatResponse(List.of(generation));
+        org.springframework.ai.chat.model.ChatResponse mockChatResponse = 
+            new org.springframework.ai.chat.model.ChatResponse(List.of(generation));
         
         when(chatModel.call(any(Prompt.class))).thenReturn(mockChatResponse);
         

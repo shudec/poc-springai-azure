@@ -52,7 +52,7 @@ class ChatControllerIntegrationTest {
         
         when(chatService.chat(any(ChatRequest.class))).thenReturn(response);
         when(rateLimitBucket.tryConsumeAndReturnRemaining(1))
-            .thenReturn(io.github.bucket4j.ConsumptionProbe.consumed(9));
+            .thenReturn(io.github.bucket4j.ConsumptionProbe.consumed(9L, 9L));
         
         // Act & Assert
         mockMvc.perform(post("/api/chat")
