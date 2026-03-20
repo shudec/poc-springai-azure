@@ -1,5 +1,5 @@
 resource "azurerm_service_plan" "plan" {
-  name                = "plan-${var.environment}-springai"
+  name                = "plan-shc-${var.environment}-springai"
   location            = var.location
   resource_group_name = var.resource_group_name
   os_type             = "Linux"
@@ -15,7 +15,7 @@ resource "azurerm_service_plan" "plan" {
 }
 
 resource "azurerm_linux_web_app" "app" {
-  name                = "app-${var.environment}-springai-${substr(md5(var.resource_group_name), 0, 6)}"
+  name                = "app-shc-${var.environment}-springai-${substr(md5(var.resource_group_name), 0, 6)}"
   location            = var.location
   resource_group_name = var.resource_group_name
   service_plan_id     = azurerm_service_plan.plan.id

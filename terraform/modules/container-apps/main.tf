@@ -1,5 +1,5 @@
 resource "azurerm_container_app_environment" "env" {
-  name                       = "cae-${var.environment}-springai"
+  name                       = "cae-shc-${var.environment}-springai"
   location                   = var.location
   resource_group_name        = var.resource_group_name
   log_analytics_workspace_id = var.log_analytics_workspace_id
@@ -11,7 +11,7 @@ resource "azurerm_container_app_environment" "env" {
 }
 
 resource "azurerm_container_app" "app" {
-  name                         = "ca-${var.environment}-springai"
+  name                         = "ca-shc-${var.environment}-springai"
   container_app_environment_id = azurerm_container_app_environment.env.id
   resource_group_name          = var.resource_group_name
   revision_mode                = "Single"

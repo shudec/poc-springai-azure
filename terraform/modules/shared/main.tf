@@ -1,5 +1,5 @@
 resource "azurerm_container_registry" "acr" {
-  name                = "acr${var.environment}springai${substr(md5(var.resource_group_name), 0, 6)}"
+  name                = "acrshc${var.environment}springai${substr(md5(var.resource_group_name), 0, 6)}"
   resource_group_name = var.resource_group_name
   location            = var.location
   sku                 = "Basic"
@@ -12,7 +12,7 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_log_analytics_workspace" "workspace" {
-  name                = "logs-${var.environment}-springai"
+  name                = "logs-shc-${var.environment}-springai"
   location            = var.location
   resource_group_name = var.resource_group_name
   sku                 = "PerGB2018"
@@ -25,7 +25,7 @@ resource "azurerm_log_analytics_workspace" "workspace" {
 }
 
 resource "azurerm_application_insights" "app_insights" {
-  name                = "appi-${var.environment}-springai"
+  name                = "appi-shc-${var.environment}-springai"
   location            = var.location
   resource_group_name = var.resource_group_name
   workspace_id        = azurerm_log_analytics_workspace.workspace.id
@@ -38,7 +38,7 @@ resource "azurerm_application_insights" "app_insights" {
 }
 
 resource "azurerm_user_assigned_identity" "app_identity" {
-  name                = "id-${var.environment}-springai"
+  name                = "id-shc-${var.environment}-springai"
   location            = var.location
   resource_group_name = var.resource_group_name
 
