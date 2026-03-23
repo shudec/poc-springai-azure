@@ -43,7 +43,7 @@ jobs:
     - name: Build and push Docker image with Jib
       run: |
         mvn compile jib:build \
-          -Dimage=${{ secrets.ACR_LOGIN_SERVER }}/springai-azure-demo:${{ github.sha }} \
+          -Djib.to.image=${{ secrets.ACR_LOGIN_SERVER }}/springai-azure-demo:${{ github.sha }} \
           -Djib.to.auth.username=${{ secrets.ACR_USERNAME }} \
           -Djib.to.auth.password=${{ secrets.ACR_PASSWORD }}
         

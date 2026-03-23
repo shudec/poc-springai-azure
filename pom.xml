@@ -112,11 +112,15 @@
                         <image>eclipse-temurin:21-jre-alpine</image>
                     </from>
                     <to>
-                        <image>${env.ACR_LOGIN_SERVER}/springai-azure-demo</image>
+                        <image>springai-azure-demo</image>
                         <tags>
                             <tag>latest</tag>
                             <tag>${project.version}</tag>
                         </tags>
+                        <auth>
+                            <username>${jib.to.auth.username}</username>
+                            <password>${jib.to.auth.password}</password>
+                        </auth>
                     </to>
                     <container>
                         <jvmFlags>
