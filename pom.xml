@@ -111,13 +111,6 @@
                     <from>
                         <image>eclipse-temurin:21-jre-alpine</image>
                     </from>
-                    <to>
-                        <image>${jib.to.image}</image>
-                        <auth>
-                            <username>${jib.to.auth.username}</username>
-                            <password>${jib.to.auth.password}</password>
-                        </auth>
-                    </to>
                     <container>
                         <jvmFlags>
                             <jvmFlag>-Xms256m</jvmFlag>
