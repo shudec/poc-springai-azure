@@ -1,22 +1,21 @@
 # Multi-stage Dockerfile for Spring AI Azure Demo
 
 # Build stage
-FROM eclipse-temurin:21-jdk AS build
+FROM maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+# Copy pom.xml
+COPY pom.xml ./
 
 # Download dependencies (cached layer)
-RUN ./mvnw dependency:go-offline
+RUN mvn dependency:go-offline -B
 
 # Copy source code
 COPY src ./src
 
 # Build the application
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests -B
 
 # Runtime stage
 FROM eclipse-temurin:21-jre-alpine
@@ -34,7 +33,7 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
 # Set environment variables
-ENV SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-prod}
+ENV SPRING_PROFILES_ACTIVE=prod
 ENV JAVA_OPTS="-Xms256m -Xmx512m"
 
 # Health check
