@@ -8,7 +8,7 @@ on:
 
 env:
   JAVA_VERSION: '21'
-  ACR_NAME: ${{ secrets.ACR_USERNAME }}
+  ACR_NAME: 'acrshcdevspringai158ae4'
   
 jobs:
   build-and-deploy:
@@ -34,11 +34,11 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
     - name: Login to Azure Container Registry
-      run: az acr login --name ${{ secrets.ACR_USERNAME }}
+      run: az acr login --name ${{ env.ACR_NAME }}
         
     - name: Build and push Docker image
       run: |
-        IMAGE_TAG="${{ secrets.ACR_USERNAME }}.azurecr.io/springai-azure-demo:${{ github.sha }}"
+        IMAGE_TAG="${{ env.ACR_NAME }}.azurecr.io/springai-azure-demo:${{ github.sha }}"
         echo "Building image: $IMAGE_TAG"
         docker build -t "$IMAGE_TAG" .
         docker push "$IMAGE_TAG"
@@ -48,7 +48,7 @@ jobs:
       with:
         containerAppName: ${{ secrets.CONTAINER_APP_NAME }}
         resourceGroup: ${{ secrets.RESOURCE_GROUP_NAME }}
-        imageToDeploy: ${{ secrets.ACR_USERNAME }}.azurecr.io/springai-azure-demo:${{ github.sha }}
+        imageToDeploy: ${{ env.ACR_NAME }}.azurecr.io/springai-azure-demo:${{ github.sha }}
         
     - name: Azure Logout
       if: always()
