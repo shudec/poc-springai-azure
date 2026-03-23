@@ -1,11 +1,19 @@
 package com.ssg.ccoe.demo.azure.springai.service;
 
-import com.ssg.ccoe.demo.azure.springai.model.dto.ChatRequest;
-import com.ssg.ccoe.demo.azure.springai.model.dto.ChatResponse;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ai.azure.openai.AzureOpenAiChatModel;
 import org.springframework.ai.chat.messages.AssistantMessage;
@@ -13,11 +21,7 @@ import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import com.ssg.ccoe.demo.azure.springai.model.dto.ChatRequest;
 
 @ExtendWith(MockitoExtension.class)
 class ChatServiceTest {
