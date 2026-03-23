@@ -41,9 +41,12 @@ jobs:
         password: ${{ secrets.ACR_PASSWORD }}
         
     - name: Build and push Docker image
+      env:
+        IMAGE_TAG: ${{ secrets.ACR_LOGIN_SERVER }}/springai-azure-demo:${{ github.sha }}
       run: |
-        docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/springai-azure-demo:${{ github.sha }} .
-        docker push ${{ secrets.ACR_LOGIN_SERVER }}/springai-azure-demo:${{ github.sha }}
+        echo "Building image: $IMAGE_TAG"
+        docker build -t "$IMAGE_TAG" .
+        docker push "$IMAGE_TAG"
         
     - name: Deploy to Azure Container Apps
       uses: azure/container-apps-deploy-action@v1
